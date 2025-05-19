@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -24,6 +24,15 @@ def hello_world():
 def split():
     return 0
 
+@app.route("/test")
+def test():
+    my_file = client.files.upload(file="C:/Users/syah/Documents/GitHub/Mentri-Berbudaya/test.jpg")
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=[my_file, "create a json string."],
+    )
+    return response.text
 
 if __name__ == "__main__":
     app.run()
